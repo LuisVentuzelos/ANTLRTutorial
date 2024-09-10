@@ -1,6 +1,8 @@
 ﻿using Antlr4.Runtime;
 
-class Program
+namespace Logo2Svg;
+
+static class App 
 {
     static int Main(string[] args)
     {

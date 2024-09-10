@@ -22,6 +22,9 @@ namespace BuildAntlr
         [Required]
         public ITaskItem[] Files { get; set; }
 
+        public string Namespace { get; set; }
+        public string OutputDir { get; set; }
+
         public override bool Execute()
         {
             string pathSeparator = System.IO.Path.PathSeparator.ToString();
@@ -30,16 +33,18 @@ namespace BuildAntlr
 
             var filenames = Files.Select(item => item.GetMetadata("FullPath")).ToArray();
             string files = string.Join(" ", filenames);
-            
+
             var visitor = Visitors ? "-visitor" : "-no-visitor";
             var listener = Listeners ? "-listener" : "-no-listener";
+            var output = string.IsNullOrEmpty(OutputDir) ? "" : $"-o {OutputDir}";
+            var @namespace = string.IsNullOrEmpty(Namespace) ? "" : $"-package {Namespace}";
 
-            var proc = new Process 
+            var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = JavaPath,
-                    Arguments = $"-Xmx500M -cp {cp} org.antlr.v4.Tool {visitor} {listener} -Dlanguage=CSharp {files}",
+                    Arguments = $"-Xmx500M -cp {cp} org.antlr.v4.Tool {visitor} {listener} {output} {@namespace} -Dlanguage=CSharp {files}",
                     UseShellExecute = false,
                     RedirectStandardOutput = false,
                     CreateNoWindow = true
