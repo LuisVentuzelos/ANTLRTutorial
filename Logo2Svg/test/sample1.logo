@@ -1,5 +1,11 @@
-FD 100
-RT 90
-FD 100
-RT 135
-FD 140
+fd 10
+arc 90 90
+rt 90
+fd 10
+arc 90 90
+rt 90
+fd 10
+arc 90 90
+rt 90
+fd 10
+arc 90 90
